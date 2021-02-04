@@ -1,0 +1,156 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+
+<ResultPage>:
+    canvas:
+        Color:
+            rgba: get_color_from_hex('#ccffff')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    on_enter:
+        app.results()
+    ScreenManager:
+        id: result_view
+        transition: FadeTransition()
+        Screen:
+            id: view_list
+            name: 'view_list'
+            FloatLayout:
+                canvas:
+                    Color:
+                        rgba: get_color_from_hex('#ccffff')
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                GridLayout:
+                    cols: 1
+                    pos_hint: {'top': 1, 'left': 1}
+                    size_hint: 1, .1
+                    MDToolbar:
+                        title: 'Result'
+                        left_action_items: [['menu', lambda x: app.navBar('open')]]
+                        elevation: 10
+                ScrollView:
+                    pos_hint: {'top': .9}
+                    size_hint: 1, .9
+                    MDList:
+                        id: results
+        Screen:
+            id: view
+            name: 'view'
+            MDGridLayout:
+                cols: 1
+                pos_hint: {'center_x': .5, 'center_y': .1}
+                size_hint: 1, .1
+                MDRaisedButton:
+                    text: "Back"
+                    on_release:
+                        result_view.current = 'view_list'
+            Carousel:
+                id: carousel
+                MDFloatLayout:
+                    MDCard:
+                        orientation: 'vertical'
+                        pos_hint: {'center_x': .5, 'center_y': .5}
+                        size_hint: .9, .58
+                        MDGridLayout:
+                            cols: 2
+                            orientation: 'vertical'
+                            MDLabel:
+                                text: "Test Name"
+                                halign: 'center'
+                                bold: True
+                            MDLabel:
+                                id: testName
+
+                            MDLabel:
+                                text: "Test ID"
+                                halign: 'center'
+                                bold: True
+                            MDLabel:
+                                id: testID
+                            
+                            MDLabel:
+                                text: "Date"
+                                halign: 'center'
+                                bold: True
+                            MDLabel:
+                                id: date
+
+                            
+                        GridLayout:
+                            cols: 3
+                            padding: "10dp", "20dp", "10dp", "10dp"
+                            spacing: "10dp"
+                            GridLayout:
+                                cols: 1
+                                canvas:
+                                    Color:
+                                        rgba: [0, 0, 0, .8]
+                                    Ellipse:
+                                        pos: self.pos
+                                        size: self.size
+                                MDLabel:
+                                    id: AQ
+                                    halign: 'center'
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1 
+                                    bold: True
+                                    font_style: 'H3'
+                                MDLabel:
+                                    text: "Total"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1 
+                                    halign: 'center'
+                            GridLayout:
+                                cols: 1
+                                canvas:
+                                    Color:
+                                        rgba: [1, 0, 1, 1]
+                                    Ellipse:
+                                        pos: self.pos
+                                        size: self.size
+                                MDLabel:
+                                    id: CQ
+                                    halign: 'center'
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1 
+                                    bold: True
+                                    font_style: 'H3'
+                                MDLabel:
+                                    text: "Correct"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1 
+                                    halign: 'center'
+                            GridLayout:
+                                cols: 1
+                                canvas:
+                                    Color:
+                                        rgba: [1, 0, 0, .5]
+                                    Ellipse:
+                                        pos: self.pos
+                                        size: self.size
+                                MDLabel:
+                                    id: WQ
+                                    halign: 'center'
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1 
+                                    bold: True
+                                    font_style: 'H3'
+                                MDLabel:
+                                    text: "Wrong"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1 
+                                    halign: 'center'
+
+            GridLayout:
+                cols: 1
+                pos_hint: {'center_x': .5, 'center_y': .1}
+                size_hint: 1, .1
+                Button:
+                    text: "Back"
+                    font_size: "25dp"
+                    on_release:
+                        result_view.current = 'view_list'

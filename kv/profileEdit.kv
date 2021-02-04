@@ -1,0 +1,57 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+<ProfileEdit>:
+    #on_enter:
+    #    app.avatarGrid()
+    FloatLayout:
+        canvas:
+            Color:
+                rgba: get_color_from_hex('#ccffff')
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        GridLayout:
+            cols: 1
+            pos_hint: {'top': 1, 'left': 1}
+            size_hint: 1, .1
+            MDToolbar:
+                title: "Edit Profile"
+                # left_action_items: [['menu', lambda x: app.navBar('open')]]
+                elevation: 10
+        GridLayout:
+            rows: 2
+            pos_hint: {'top': .88, 'left': 1}
+            size_hint: 1, .2
+            spacing: 1
+            padding: 10, 0, 10, 0
+            
+            Image:
+                id: av_btn
+                source: 'avatars/man.png'
+            
+            MDTextField:
+                id: userName
+                text: app.defaultName
+                hint_text: "Name"
+
+        ScrollView:
+            pos_hint: {'top': .65, 'left': 1}
+            size_hint: 1, .55
+            bar_pos_y: 'left'
+            bar_width: 10
+            GridLayout:
+                cols: 3
+                id: avatar_grid
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: '100dp'
+                row_force_default: True
+                spacing: 20, 20
+                #padding: 20
+        
+        MDFillRoundFlatButton:
+            pos_hint: {'top': .08, 'center_x': .5}
+            text: 'Select'
+            on_release:
+                app.profileEdit(userName.text)
+                app.changeScreen('up', 'dashboard')

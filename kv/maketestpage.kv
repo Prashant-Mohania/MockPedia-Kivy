@@ -1,0 +1,365 @@
+
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import uuid uuid
+
+<MakeTestPage>:
+    FloatLayout:
+        canvas:
+            Color:
+                rgba: get_color_from_hex('#ccffff')
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        ScreenManager:
+            id: mkt_sm
+            Screen:
+                id: test_list
+                name: 'test_list'
+                #on_enter:
+                #    app.listScreen_pre_fatch()
+                GridLayout:
+                    cols: 1
+                    id: LIST_SCREEN
+                    MDToolbar:
+                        title: 'Make Test'
+                        left_action_items: [['backspace', lambda x: app.changeScreen('right', 'dashboard')]]
+                        right_action_items: [['plus', lambda x: app.makeNewTest()]]
+                        elevation: 11
+                    ScrollView:
+                        MDList:
+                            id: LIST
+            Screen:
+                id: start
+                name: 'start'
+                GridLayout:
+                    pos_hint: {'center_x': .5, 'center_y': .55}
+                    size_hint: 1, .2
+                    cols: 1
+                    MDLabel:
+                        text: 'always write a right answer on first Option textField.\n(Options will be suffled during the mock test)'
+                        halign: 'center'
+                        font_style: 'H4'
+                MDFillRoundFlatButton:
+                    text: 'Start'
+                    font_size: "20dp"
+                    pos_hint: {'center_x': .5, 'center_y': .35}
+                    on_release: mkt_sm.current = 'mkt_setup'
+                
+                MDRoundFlatButton:
+                    text: 'Cancel'
+                    font_size: "20dp"
+                    pos_hint: {'center_x': .5, 'center_y': .25}
+                    on_release:
+                        #app.changeScreen('right', 'dashboard')
+                        mkt_sm.current = 'test_list'
+
+
+            Screen:
+                id: mkt_setup
+                name: 'mkt_setup'
+                on_enter:
+                    test_id.text = f'{str(uuid.uuid4().fields[1])[:3]}-{str(uuid.uuid4().fields[1])[:3]}-{str(uuid.uuid4().fields[1])[:3]}'
+
+# ' faltu
+
+
+                FloatLayout:
+                    GridLayout:
+                        cols: 1
+                        pos_hint: {'top': 1, 'left': 1}
+                        size_hint: 1, .1
+                        MDToolbar:
+                            title: 'Make Test'
+                            left_action_items: [['menu', lambda x: app.navBar('open')]]
+                            elevation: 10
+                            
+                    GridLayout:
+                        cols: 2
+                        padding: "20dp"
+                        spacing: "20dp"
+                        pos_hint: {'top': .9, 'left': 1}
+                        size_hint: 1, .1
+                        MDLabel:
+                            text: 'Test ID    :-'
+                            halign: 'right'
+                            bold: True
+
+                        MDLabel:
+                            id: test_id
+                            text: '123-456-789'
+                            halign: 'left'
+                            bold: True
+
+                    GridLayout:
+                        cols: 1
+                        padding: "40dp"
+                        # spacing: "20dp"
+                        pos_hint: {'top': .85, 'left': 1}
+                        size_hint: 1, .1
+                        MDTextField:
+                            id: test_name
+                            hint_text: 'Test Name'
+                            mode: "rectangle"
+                            required: True
+
+                    GridLayout:
+                        cols: 1
+                        pos_hint: {'top': .8, 'left': 1}
+                        size_hint: 1, .1
+                        padding: "80dp"
+                        spacing: "20dp"
+                        MDTextField:
+                            id: num_of_ques
+                            hint_text: 'Number of question in Test'
+                            mode: 'rectangle'
+                            required: True
+                    
+                    GridLayout:
+                        cols: 1
+                        pos_hint: {'top': .55, 'left': 1}
+                        size_hint: 1, .1
+                        MDTextButton:
+                            id: set_date
+                            pos_hint: {'top': .55, 'left': 1}
+                            size_hint: 1, .1
+                            text: 'Select Date'
+                            font_size: "30dp"
+                            on_release: app.setDate()
+
+                        MDLabel:
+                            pos_hint: {'top': .5, 'left': 1}
+                            size_hint: 1, .1
+                            text: 'Test Date'
+                            font_size: "20dp"
+                            halign: 'center'
+                    
+                    GridLayout:
+                        cols: 1
+                        pos_hint: {'top': .45, 'left': 1}
+                        size_hint: 1, .1
+                        padding: "20dp", 0, "20dp", 0
+
+                        MDTextField:
+                            id: dur
+                            hint_text: 'Duration of test in minutes'
+                            line_color_normal: 1, 1, 1, 1
+                            current_hint_text_color: [0, 0, 0, 1]
+
+
+                        MDLabel:
+                            pos_hint: {'top': .5, 'left': 1}
+                            size_hint: 1, .1
+                            text: 'Test Duration'
+                            font_size: "20dp"
+                            halign: 'center'
+                    
+                    MDCard:
+                        id: confirm_card
+                        pos_hint: {'center_x': .5, 'center_y': -1}
+                        size_hint: .8, .6
+                        elevation: 11
+                        
+                        FloatLayout:
+                            GridLayout:
+                                cols: 1
+                                canvas:
+                                    Color:
+                                        rgba: [1, 0, .45, 1]
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                pos_hint: {'top': 1, 'center_x': .5}
+                                size_hint: 1, .1
+
+                                MDLabel:
+                                    text: 'Confirm Details'
+                                    halign: 'center'
+                                    font_size: "20dp"
+                                    bold: True
+                            
+                            GridLayout:
+                                cols: 2
+                                pos_hint: {'top': .8, 'center_x': .5}
+                                size_hint: 1, .1
+                                MDLabel:
+                                    text: 'Test ID  :-'
+                                    halign: 'center'
+                                MDLabel:
+                                    text: test_id.text
+                                
+                            GridLayout:
+                                cols: 2
+                                pos_hint: {'top': .7, 'center_x': .5}
+                                size_hint: 1, .1
+                                MDLabel:
+                                    text: 'Test Name  :-'
+                                    halign: 'center'
+                                MDLabel:
+                                    text: test_name.text
+                                
+                            GridLayout:
+                                cols: 2
+                                pos_hint: {'top': .6, 'center_x': .5}
+                                size_hint: 1, .1
+                                MDLabel:
+                                    text: 'Number of\n  Question  :-'
+                                    halign: 'center'
+                                MDLabel:
+                                    text: num_of_ques.text
+                                
+                            GridLayout:
+                                cols: 2
+                                pos_hint: {'top': .5, 'center_x': .5}
+                                size_hint: 1, .1
+                                MDLabel:
+                                    text: 'Test Date  :-'
+                                    halign: 'center'
+                                MDLabel:
+                                    text: set_date.text
+                                
+                            GridLayout:
+                                cols: 2
+                                pos_hint: {'top': .4, 'center_x': .5}
+                                size_hint: 1, .1
+                                MDLabel:
+                                    text: 'Duration  :-'
+                                    halign: 'center'
+                                MDLabel:
+                                    text: dur.text + ' minutes'
+                                
+                            GridLayout:
+                                cols: 2
+                                pos_hint: {'top': .3, 'center_x': .5}
+                                size_hint: 1, .1
+                                padding: "50dp"
+                                spacing: "40dp"
+                                MDRaisedButton:
+                                    text: 'EDIT'
+                                    on_release:
+                                        app.confirmCard('close')
+                                MDRaisedButton:
+                                    text: 'CONFIRM'
+                                    on_release:
+                                        mkt_sm.current = 'preview'
+                                        
+
+
+                    MDFillRoundFlatButton:
+                        pos_hint: {'top': .08, 'center_x': .5}
+                        text: 'Select'
+                        on_release:
+                            app.confirmCard('open') if test_name.text != '' and num_of_ques.text != '' and set_date.text != 'Select Date' and dur.text != '' else app.showToast('All Fields Are Required')
+                            
+
+
+            
+            Screen:
+                name: 'preview'
+                on_enter:
+                    app.pre_make_test()
+                    
+                FloatLayout:
+                    GridLayout:
+                        rows: 1
+                        pos_hint: {'top': 1, 'left': 1}
+                        size_hint: 1, .1
+                        MDToolbar:
+                            title: test_name.text
+                    
+                    MDCard:
+                        id: test_card
+                        pos_hint: {'top': -1, 'center_x': .5}
+                        size_hint: .96, .9
+                        elevation: 5
+                        background_color: [1, 1, 0, .1]
+                        FloatLayout:
+                            GridLayout:
+                                cols: 3
+                                pos_hint: {'top': 1, 'center_x': .5}
+                                size_hint: 1, .1
+
+                                MDIconButton:
+                                    id: previousbtn
+                                    icon: 'arrow-collapse-left'
+                                    on_release:
+                                        app.previousQues() #if ques.text != '' and a.text != '' and b.text != '' and c.text != '' and d.text != '' else app.showToast('All Fields are required')
+
+                                MDLabel:
+                                    id: quesNum
+                                    # text: 'Question NO. 1'
+                                    halign: 'center'
+                                    font_size: "20dp"
+                                    bold: True
+                                
+                                MDIconButton:
+                                    id: nextbtn
+                                    icon: 'arrow-collapse-right'
+                                    on_release:
+                                        app.nextQues() if ques.text != '' and a.text != '' and b.text != '' and c.text != '' and d.text != '' else app.showToast('All Fields are required')
+                            
+                            GridLayout:
+                                cols: 1
+                                pos_hint: {'top': .9}
+                                size_hint: 1, .3
+                                padding: "20dp"
+                                
+                                MDTextFieldRect:
+                                    id: ques
+                                    hint_text: 'Write your question'
+                            
+                            GridLayout:
+                                cols: 1
+                                pos_hint: {'top': .6, 'center_x': .5}
+                                size_hint: 1, .5
+                                padding: "20dp", "10dp", "20dp", "10dp"
+                                spacing: "10dp"
+                                canvas:
+                                    Color:
+                                        rgba: get_color_from_hex('#3a7371')
+                                    RoundedRectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                        radius: [20, 20, 10, 10]
+                                MDTextField:
+                                    id: a
+                                    hint_text: 'Option A'
+                                    max_text_length: 25
+                                    required: True
+                                    line_color_normal: 1, 1, 1, 1
+                                    
+                                MDTextField:
+                                    id: b
+                                    hint_text: 'Option B'
+                                    max_text_length: 25
+                                    required: True
+                                    line_color_normal: 1, 1, 1, 1
+                                    
+                                MDTextField:
+                                    id: c
+                                    hint_text: 'Option C'
+                                    max_text_length: 25
+                                    required: True
+                                    line_color_normal: 1, 1, 1, 1
+                                    
+                                MDTextField:
+                                    id: d
+                                    hint_text: 'Option D'
+                                    max_text_length: 25
+                                    required: True
+                                    line_color_normal: 1, 1, 1, 1
+
+                            GridLayout:
+                                cols: 2
+                                pos_hint: {'top': .1, 'center_x': .5}
+                                size_hint: 1, .1
+                                padding: "130dp", "5dp", "80dp", 0
+                                spacing: "20dp"
+                                MDRaisedButton:
+                                    id: submitbtn
+                                    text: 'Submit Question'
+                                    on_release:
+                                        app.quesSubmit() if ques.text != '' and a.text != '' and b.text != '' and c.text != '' and d.text != '' else app.showToast('All Fields are required')
+                                    
+
+                                    

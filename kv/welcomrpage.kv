@@ -1,0 +1,131 @@
+
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+
+<WelcomePage>:
+    on_enter:
+        app.welcomeAnim()
+    FloatLayout:
+        canvas:
+            Color:
+                rgba: get_color_from_hex('#ccffff')
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Image:
+            id: img
+            #source: 'me.png'
+            source: 'Slide.jpg'
+            #size_hint: .4, .6
+            pos_hint: {'center_x': .5, 'center_y': .5}
+        
+
+        ScreenManager:
+            id: log_in_sm
+
+            Screen:
+                name: 'Login'
+                
+                FloatLayout:
+
+                    BoxLayout:
+                        id: log_in_field
+                        orientation: 'vertical'
+                        spacing: "10dp"
+                        pos_hint: {'center_y': .1, 'center_x': .5}
+                        size_hint: .8, .5
+                        spacing: 0, "20sp"
+
+                        MDLabel:
+                            text: "Log In"
+                            font_style: 'H3'
+                            halign: 'center'
+
+                        MDTextField:
+                            id: log_in_email
+                            hint_text: 'Email Id'
+                            mode: "rectangle"
+                            required: True
+                            multiline: True
+                            current_hint_text_color: [0, 0, 0, 1]
+                            
+                        MDTextField:
+                            id: log_in_password
+                            hint_text: 'Password'
+                            password: True
+                            mode: "rectangle"
+                            required: True
+                            current_hint_text_color: [0, 0, 0, 1]
+                        
+                        MDTextButton:
+                            id: forgot_password
+                            text: "Forgot Password"
+                            custom_color: 0, 1, 0, 1
+                            #pos_hint: {'center_x': .5}
+                            on_release: app.faltu()
+                            font_size: "20dp"
+                        
+                        MDFillRoundFlatButton:
+                            text: 'Log In'
+                            pos_hint: {'center_x': .9}
+                            on_release: app.changeScreen('right', 'dashboard')
+                         
+
+                    MDFillRoundFlatButton:
+                        id: scrn_btn
+                        text: 'Create Account'
+                        pos_hint: {'top': .0, 'center_x': .5}
+                        padding: "10dp"
+                        on_release: log_in_sm.current = 'Signin'
+            Screen:
+                name: 'Signin'
+                FloatLayout:
+                    BoxLayout:
+                        id: sign_in_Field
+                        orientation: 'vertical'
+                        spacing: "10dp"
+                        pos_hint: {'center_y': .4, 'center_x': .5}
+                        size_hint: .8, .5
+
+                        MDLabel:
+                            text: "Sign In"
+                            font_style: 'H3'
+                            halign: 'center'
+
+                        MDTextField:
+                            id: User_fname
+                            hint_text: 'First Name'
+                            mode: "rectangle"
+                            required: True
+
+                        MDTextField:
+                            id: user_lname
+                            hint_text: 'Last Name'
+                            mode: "rectangle"
+                            required: True
+
+                        MDTextField:
+                            id: sign_in_email
+                            hint_text: 'Email Id'
+                            mode: "rectangle"
+                            required: True
+                            
+                        MDTextField:
+                            id: sign_in_password
+                            hint_text: 'Password'
+                            password: True
+                            mode: "rectangle"
+                            required: True
+
+                        MDFillRoundFlatButton:
+                            id: sign_in_btn
+                            text: 'Sign In'
+                            pos_hint: {'center_x': .9}
+                        
+                    MDFillRoundFlatButton:
+                        # id: scrn_btn
+                        text: 'Already have an account'
+                        pos_hint: {'top': .1, 'center_x': .5}
+                        padding: "10dp"
+                        on_release: log_in_sm.current = 'Login'
+

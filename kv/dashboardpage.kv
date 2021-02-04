@@ -1,0 +1,101 @@
+
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+<DashboardPage>:
+    FloatLayout:
+        canvas:
+            Color:
+                rgba: get_color_from_hex('#ccffff')
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        GridLayout:
+            cols: 1
+            pos_hint: {'top': 1, 'left': 1}
+            size_hint: 1, .1
+            MDToolbar:
+                title: 'Dashboard'
+                left_action_items: [['menu', lambda x: app.navBar('open')]]
+                elevation: 10
+        GridLayout:
+            cols: 1
+            pos_hint: {'top': .88, 'left': 1}
+            size_hint: 1, .2
+            spacing: 1
+            padding: 1
+            
+            Image:
+                id: av_btn
+                source: 'avatars/man.png'
+                
+                
+        GridLayout:
+            cols: 1
+            pos_hint: {'top': .65, 'left': 1}
+            size_hint: 1, .35
+            MDGridLayout:
+                cols: 1
+                spacing: 15
+                MDLabel:
+                    text: 'Name'
+                    font_size: "20dp"
+                    bold: True
+                    halign: 'center'
+                MDLabel:
+                    id: userName
+                    text: app.defaultName
+                    font_size: "40dp"
+                    # bold: True
+                    halign: 'center'
+#            Widget:
+#            MDGridLayout:
+#                cols: 1
+#                spacing: 15
+#                MDLabel:
+#                    text: 'E-Mail'
+#                    font_size: "20dp"
+#                    bold: True
+#                    halign: 'center'
+#                MDLabel:
+#                    text: 'pramo.prem.7102@gmailcom'
+#                    font_size: "25dp"
+#                    # bold: True
+#                    halign: 'center'
+#            Widget:
+#            MDGridLayout:
+#                cols: 1
+#                spacing: "15dp"
+#                MDLabel:
+#                    text: 'User ID'
+#                    font_size: "20"
+#                    bold: True
+#                    halign: 'center'
+#                MDLabel:
+#                    text: '123-456-789'
+#                    font_size: "25dp"
+#                    # bold: True
+#                    halign: 'center'
+#            Widget:
+#            MDGridLayout:
+#                cols: 1
+#                spacing: "15dp"
+#                # MDIconButton:
+#                #     icon: 'menu'
+#                MDLabel:
+#                    text: 'Verified'
+#                    font_size: "20dp"
+#                    bold: True
+#                    halign: 'center'
+#                MDLabel:
+#                    text: 'Not Verified'
+#                    font_size: "25dp"
+#                    # bold: True
+#                    halign: 'center'
+#                    # on_release: app.pick_dob()
+        MDFillRoundFlatButton:
+            id: profile_edit_btn
+            text: 'Edit PRofile'
+            pos_hint: {'top': .1, 'center_x': .5}
+            padding: "10dp"
+            on_release:
+                app.changeScreen('right', 'profileEdit')

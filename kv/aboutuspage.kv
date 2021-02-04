@@ -1,0 +1,18 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+<AboutUsPage>:
+    FloatLayout:
+        canvas:
+            Color:
+                rgba: get_color_from_hex('#ccffff')
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        GridLayout:
+            cols: 1
+            pos_hint: {'top': 1, 'left': 1}
+            size_hint: 1, .1
+            MDToolbar:
+                title: 'About Us'
+                left_action_items: [['menu', lambda x: app.navBar('open')]]
+                elevation: 10

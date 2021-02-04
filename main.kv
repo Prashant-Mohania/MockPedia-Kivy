@@ -1,0 +1,105 @@
+
+#:include kv/dashboardpage.kv
+#:include kv/profileEdit.kv
+#:include kv/ChangeAvatarPage.kv
+#:include kv/maketestpage.kv
+#:include kv/searchtestpage.kv
+#:include kv/resultpage.kv
+#:include kv/aboutuspage.kv
+
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+
+NavigationLayout:
+    ScreenManager:
+        id: sm
+        
+        DashboardPage:
+            name: 'dashboard'
+            id: dashboard
+
+        ProfileEdit:
+            name: 'profileEdit'
+            id: profileEdit
+        
+        ChangeAvatarPage:
+            name: 'chng_avatar'
+            id: chng_avatar
+        
+        MakeTestPage:
+            name: 'make_test'
+            id: make_test
+
+        SearchTestPage:
+            name: 'search_test'
+            id: search_test
+
+        ResultPage:
+            name: 'result'
+            id: result
+
+        AboutUsPage:
+            name: 'about_us'
+            id: about_us
+
+    MDNavigationDrawer:
+        id: nav
+        # close_on_click: False
+        # swipe_edge_width: 0
+        canvas:
+            Color:
+                rgba: get_color_from_hex('#ccffff')
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            orientation: 'vertical'
+            
+            BoxLayout:
+                orientation: 'vertical'
+                padding: "10dp"
+                spacing: "10dp"
+                Image:
+                    source: 'Slide.jpg'
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    #size_hint: .4, .4
+            
+            ScrollView:
+                MDList:
+                    OneLineIconListItem:
+                        text: 'Dashboard'
+                        on_release:
+                            app.changeScreen('right', 'dashboard')
+                            nav.set_state('close')
+                        IconLeftWidget:
+                            icon: "view-dashboard"
+                    OneLineIconListItem:
+                        text: 'Make Test'
+                        on_release:
+                            app.changeScreen('right', 'make_test')
+                            nav.set_state('close')
+                        IconLeftWidget:
+                            icon: "notebook"
+                    OneLineIconListItem:
+                        text: 'Search Test'
+                        on_release:
+                            app.changeScreen('right', 'search_test')
+                            nav.set_state('close')
+                        IconLeftWidget:
+                            icon: "book-open"
+                    OneLineIconListItem:
+                        text: 'Result'
+                        on_release:
+                            app.changeScreen('right', 'result')
+                            nav.set_state('close')
+                        IconLeftWidget:
+                            icon: "book-information-variant"
+                    OneLineIconListItem:
+                        text: 'About App'
+                        on_release:
+                            app.changeScreen('right', 'about_us')
+                            nav.set_state('close')
+                        IconLeftWidget:
+                            icon: "information"
+
+

@@ -1,0 +1,195 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+
+<SearchTestPage>:
+    #id: sPage
+    FloatLayout:
+        canvas:
+            Color:
+                rgba: get_color_from_hex('#ccffff')
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        
+
+        ScreenManager:
+            id: giveTest_sm
+            Screen:
+                name: 'search'
+                GridLayout:
+                    cols: 1
+                    pos_hint: {'top': 1, 'left': 1}
+                    size_hint: 1, .1
+                    MDToolbar:
+                        title: 'Search Test'
+                        left_action_items: [['menu', lambda x: app.navBar('open')]]
+                        elevation: 10
+            
+                GridLayout:
+                    cols: 1
+                    pos_hint: {'top': .88}
+                    size_hint: 1, .1
+                    spacing: 10
+                    padding: "40dp", 0, "40dp", 0
+                    MDTextFieldRound:
+                        icon_left: 'magnify'
+                        hint_text: 'Search test'
+                        normal_color: 1, 1, 1, .8
+                        color_active: 1, 1, 1, .5
+                    MagicButton:
+                        text: "Search"
+                        icon: 'magnify'
+                        on_release:
+                            app.searchResults()
+                            self.wobble()
+                            # giveTest_sm.current = 'Test'
+
+                GridLayout:
+                    cols: 1
+                    pos_hint: {'top': .78}
+                    size_hint: 1, .7
+                    ScrollView:
+                        MDList:
+                            id: search_options
+            Screen:
+                name: 'Test'
+                on_enter:
+                    app.pre_give_test()
+                FloatLayout:
+                    GridLayout:
+                        rows: 1
+                        pos_hint: {'top': 1, 'left': 1}
+                        size_hint: 1, .1
+                        MDToolbar:
+                            title: "Test"
+                        
+                            GridLayout:
+                                cols: 1
+                                halign: 'right'
+                                padding: "10dp"
+                                MDLabel:
+                                    text: 'Timer'
+                                    font_size: 20
+                                    halign: 'right'
+                                MDLabel:
+                                    id: duration
+                                    text: ''
+                                    font_size: 20
+                                    halign: 'right'
+                    
+                    MDCard:
+                        id: test_card
+                        pos_hint: {'top': -1, 'center_x': .5}
+                        size_hint: .96, .9
+                        elevation: 5
+                        background_color: [1, 1, 0, .1]
+                        FloatLayout:
+                            GridLayout:
+                                cols: 3
+                                pos_hint: {'top': 1, 'center_x': .5}
+                                size_hint: 1, .1
+
+                                MDIconButton:
+                                    id: previousbtn
+                                    icon: 'arrow-collapse-left'
+                                    on_release:
+                                        app.testPreviousQues()
+
+                                MDLabel:
+                                    id: quesNum
+                                    text: 'Question NO. 1'
+                                    halign: 'center'
+                                    font_size: "20dp"
+                                    bold: True
+                                
+                                MDIconButton:
+                                    id: nextbtn
+                                    icon: 'arrow-collapse-right'
+                                    on_release:
+                                        app.testNextQues()
+                            
+                            GridLayout:
+                                cols: 1
+                                pos_hint: {'top': .95}
+                                size_hint: 1, .3
+                                padding: "20dp", 0, "20dp", 0
+                                
+                                MDLabel:
+                                    id: ques
+                                    font_size: "25dp"
+                                    halign: 'center'
+                                    
+                            
+                            GridLayout:
+                                cols: 1
+                                pos_hint: {'top': .6, 'center_x': .5}
+                                size_hint_y: .5
+                                padding: "50dp"
+                                spacing: "10dp"
+                                canvas:
+                                    Color:
+                                        rgba: get_color_from_hex('#3a7371')
+                                    RoundedRectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                        radius: [20, 20, 10, 10]
+                                
+                                
+                                MagicButton1:
+                                    id: a
+                                    text: "OPTION 1"
+                                    background_color_normal: ''
+                                    background_color: [.98, .89, .78, .67]
+                                    on_release:
+                                        self.wobble()
+                                        app.optionCheck('a')
+                                
+                                MagicButton1:
+                                    id: b
+                                    text: "OPTION 2"
+                                    background_color: [.98, .89, .78, .67]
+                                    # size_hint_x: .6
+                                    on_release:
+                                        self.wobble()
+                                        app.optionCheck('b')
+                                
+                                MagicButton1:
+                                    id: c
+                                    text: "OPTION 3"
+                                    background_color: [.98, .89, .78, .67]
+                                    # size_hint_x: .6
+                                    on_release:
+                                        self.wobble()
+                                        app.optionCheck('c')
+                                
+                                MagicButton1:
+                                    id: d
+                                    text: "OPTION 4"
+                                    background_color: [.98, .89, .78, .67]
+                                    # size_hint_x: .6
+                                    on_release:
+                                        self.wobble()
+                                        app.optionCheck('d')
+                                
+                            GridLayout:
+                                cols: 2
+                                pos_hint: {'top': .1}
+                                size_hint: 1, .1
+                                padding: "50dp", "5dp", "50dp", 0
+                                spacing: "20dp"
+                                MagicButton:
+                                    id: submitbtn
+                                    text: 'Submit Question'
+                                    on_release:
+                                        self.wobble()
+                                        app.giveQuesSubmit() #if app.opt != '' else app.showToast('Please select option')
+                                MagicButton:
+                                    id: finalsubmitbtn
+                                    text: 'Final Submit'
+                                    disabled: True
+                                    on_release:
+                                        self.wobble()
+                                        app.giveFinalSubmit()
+
+            
+            
